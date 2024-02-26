@@ -9,8 +9,8 @@ pipeline{
     stages{
         stage('sorce code'){
             steps{
-                git url:'',
-                    branch:''
+                git url:'https://github.com/Prabhu028/springpetclinic_jfrog.git',
+                    branch:'main'
             }
         }
         stage('build and package') {
@@ -18,17 +18,15 @@ pipeline{
                  rtMavenDeployer (
                     id: "SPC_DEPLOYER",
                     serverId: "JFROG_CLOUD",
-                    releaseRepo: 'qt-app-libs-snapshot-local',
-                    snapshotRepo: 'qt-app-libs-snapshot-local'
+                    releaseRepo: 'vk-libs-snapshot-local',
+                    snapshotRepo: 'vk-libs-snapshot-local'
                 )
                 rtMavenRun (
-                    tool: 'MAVEN_3.9', // Tool name from Jenkins configuration
+                    tool: 'MAVEN_3.9', 
                     pom: 'pom.xml',
                     goals: 'clean install',
                     deployerId: "SPC_DEPLOYER"
-                    //,
-                    //buildName: "${JOB_NAME}",
-                    //buildNumber: "${BUILD_ID}"
+                    
                 )
                 rtPublishBuildInfo (
                     serverId: "JFROG_CLOUD"
